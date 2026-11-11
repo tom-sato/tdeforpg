@@ -168,7 +168,7 @@ DROP TABLE IF EXISTS c2;
 CREATE TEMP TABLE c2(id serial,cname text,c_bool boolean,c_bpchar bpchar(10),c_char "char",c_cidr cidr,c_inet inet,c_name name,c_pg_node_tree pg_node_tree,c_text text,c_varchar varchar,c_xml xml,c_regclass regclass,c2_bool boolean,c2_bpchar bpchar(10),c2_char "char",c2_cidr cidr,c2_inet inet,c2_name name,c2_pg_node_tree pg_node_tree,c2_text text,c2_varchar varchar,c2_xml xml,c2_regclass regclass);
 
 INSERT INTO c2 (cname,c_bpchar,c2_bpchar) SELECT cname,t,et FROM e WHERE cname='bpchar';
-INSERT INTO c2 (cname,c_char,c2_char) SELECT cname,t,et FROM e WHERE cname='char';
+INSERT INTO c2 (cname,c_char,c2_char) SELECT cname,t,et::char FROM e WHERE cname='char';
 INSERT INTO c2 (cname,c_name,c2_name) SELECT cname,t,et FROM e WHERE cname='name';
 INSERT INTO c2 (cname,c_name,c2_name) SELECT 'name',
 E'\t\nTransparent Data Encryption for PostgreSQL\n\t******V1_0******over64byte\n',

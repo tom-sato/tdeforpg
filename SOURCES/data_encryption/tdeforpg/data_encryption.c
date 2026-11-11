@@ -40,8 +40,11 @@
 #include "replication/logicalworker.h"
 #endif
 
+#if 0
 #include "pgcrypto.h"
 #include "px.h"
+#endif
+#define px_memset memset
 
 #include "data_encryption.h"
 
@@ -720,7 +723,7 @@ enc_store_key_info(PG_FUNCTION_ARGS)
 	/* set current key information */
 	newest_key_info = create_key_info(key, algorithm);
 
-	PG_RETURN_BOOL(TRUE);
+	PG_RETURN_BOOL(true);
 }
 
 /*
@@ -744,7 +747,7 @@ enc_store_old_key_info(PG_FUNCTION_ARGS)
 	/* set old key information */
 	old_key_info = create_key_info(key, algorithm);
 
-	PG_RETURN_BOOL(TRUE);
+	PG_RETURN_BOOL(true);
 }
 
 
@@ -758,9 +761,9 @@ enc_drop_key_info(PG_FUNCTION_ARGS)
 {
 	if(drop_key_info(newest_key_info)){
 		newest_key_info = NULL;
-		PG_RETURN_BOOL(TRUE);
+		PG_RETURN_BOOL(true);
 	}
-	PG_RETURN_BOOL(FALSE);
+	PG_RETURN_BOOL(false);
 }
 
 
@@ -777,9 +780,9 @@ enc_drop_old_key_info(PG_FUNCTION_ARGS)
 {
 	if(drop_key_info(old_key_info)){
 		old_key_info = NULL;
-		PG_RETURN_BOOL(TRUE);
+		PG_RETURN_BOOL(true);
 	}
-	PG_RETURN_BOOL(FALSE);
+	PG_RETURN_BOOL(false);
 }
 
 /*
@@ -807,21 +810,21 @@ enc_rename_backupfile(PG_FUNCTION_ARGS)
 			/* remove older backup */
 			if (remove(old_filepath) != 0) {
 				/* returns false if removing older backcup is failed */
-				PG_RETURN_BOOL(FALSE);
+				PG_RETURN_BOOL(false);
 			}
 		}
 
 		/* rename backup file */
 		if (rename(new_filepath, old_filepath) != 0) {
 			/* returns false if renaming arg0 to arg1 is failed */
-			PG_RETURN_BOOL(FALSE);
+			PG_RETURN_BOOL(false);
 		}
 	}
 
 	pfree(new_filepath);
 	pfree(old_filepath);
 
-	PG_RETURN_BOOL(TRUE);
+	PG_RETURN_BOOL(true);
 
 }
 
