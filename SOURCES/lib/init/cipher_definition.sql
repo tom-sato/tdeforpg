@@ -25,7 +25,7 @@ SET check_function_bodies TO off;
 	RETURNS
 		encrypt_text
 	AS
-		'/usr/lib64/data_encryption.so','enctext_in'
+		'MODULE_PATHNAME','enctext_in'
 	LANGUAGE C STABLE STRICT;
 
 	/* define output function of encrypted text type */
@@ -34,7 +34,7 @@ SET check_function_bodies TO off;
 	RETURNS
 		cstring
 	AS
-		'/usr/lib64/data_encryption.so','enctext_out'
+		'MODULE_PATHNAME','enctext_out'
 	LANGUAGE C STABLE STRICT;
 
 	/* define recv function of encrypted text type */
@@ -43,7 +43,7 @@ SET check_function_bodies TO off;
 	RETURNS
 		encrypt_text
 	AS
-		'/usr/lib64/data_encryption.so','encrecv'
+		'MODULE_PATHNAME','encrecv'
 	LANGUAGE C IMMUTABLE STRICT;
 
 	/* define send function of encrypted text type */
@@ -52,7 +52,7 @@ SET check_function_bodies TO off;
 	RETURNS
 		bytea
 	AS
-		'/usr/lib64/data_encryption.so','encsend'
+		'MODULE_PATHNAME','encsend'
 	LANGUAGE C IMMUTABLE STRICT;
 
 	/* define input function of encrypted binary type */
@@ -61,7 +61,7 @@ SET check_function_bodies TO off;
 	RETURNS
 		encrypt_bytea
 	AS
-		'/usr/lib64/data_encryption.so','encbytea_in'
+		'MODULE_PATHNAME','encbytea_in'
 	LANGUAGE C STABLE STRICT;
 
 	/* define output function of encrypted binary type */
@@ -70,7 +70,7 @@ SET check_function_bodies TO off;
 	RETURNS
 		cstring
 	AS
-		'/usr/lib64/data_encryption.so','encbytea_out'
+		'MODULE_PATHNAME','encbytea_out'
 	LANGUAGE C STABLE STRICT;
 	
 	/* define recv function of encrypted binary type */
@@ -79,7 +79,7 @@ SET check_function_bodies TO off;
 	RETURNS
 		encrypt_bytea
 	AS
-		'/usr/lib64/data_encryption.so','encrecv'
+		'MODULE_PATHNAME','encrecv'
 	LANGUAGE C IMMUTABLE STRICT;
 
 	/* define send function of encrypted binary type */
@@ -88,7 +88,7 @@ SET check_function_bodies TO off;
 	RETURNS
 		bytea
 	AS
-		'/usr/lib64/data_encryption.so','encsend'
+		'MODULE_PATHNAME','encsend'
 	LANGUAGE C IMMUTABLE STRICT;
 
 	/* define encrypted text types */
@@ -119,7 +119,7 @@ SET check_function_bodies TO off;
 	RETURNS
 		bool
 	AS
-		'/usr/lib64/data_encryption.so','enc_compeq_enctext'
+		'MODULE_PATHNAME','enc_compeq_enctext'
 	LANGUAGE C STABLE STRICT;
 
 	/* index operator of encrypted binary types */
@@ -128,7 +128,7 @@ SET check_function_bodies TO off;
 	RETURNS
 		bool
 	AS
-		'/usr/lib64/data_encryption.so','enc_compeq_encbytea'
+		'MODULE_PATHNAME','enc_compeq_encbytea'
 	LANGUAGE C STABLE STRICT;
 
 	/* hash function for encrypted text */
@@ -137,7 +137,7 @@ SET check_function_bodies TO off;
 	RETURNS
 		integer
 	AS
-		'/usr/lib64/data_encryption.so','enc_hash_encdata'
+		'MODULE_PATHNAME','enc_hash_encdata'
 	LANGUAGE C STRICT IMMUTABLE;
 
 	/* hash function for encrypted binary */
@@ -146,7 +146,7 @@ SET check_function_bodies TO off;
 	RETURNS
 		integer
 	AS
-		'/usr/lib64/data_encryption.so','enc_hash_encdata'
+		'MODULE_PATHNAME','enc_hash_encdata'
 	LANGUAGE C STRICT IMMUTABLE;
 
 	/* load current encryption key */
@@ -155,7 +155,7 @@ SET check_function_bodies TO off;
 	RETURNS
 		bool
 	AS
-		'/usr/lib64/data_encryption.so','enc_store_key_info'
+		'MODULE_PATHNAME','enc_store_key_info'
 	LANGUAGE C STRICT;
 	
 	/* load old key to memory for re-encryption */
@@ -164,7 +164,7 @@ SET check_function_bodies TO off;
 	RETURNS
 		bool
 	AS
-		'/usr/lib64/data_encryption.so','enc_store_old_key_info'
+		'MODULE_PATHNAME','enc_store_old_key_info'
 	LANGUAGE C STRICT;
 
 	/* drops key information from memory */
@@ -173,7 +173,7 @@ SET check_function_bodies TO off;
 	RETURNS
 		bool
 	AS
-		'/usr/lib64/data_encryption.so','enc_drop_key_info'
+		'MODULE_PATHNAME','enc_drop_key_info'
 	LANGUAGE C STRICT;
 
 	/* drops old key information from memory  */
@@ -182,7 +182,7 @@ SET check_function_bodies TO off;
 	RETURNS
 		bool
 	AS
-		'/usr/lib64/data_encryption.so','enc_drop_old_key_info'
+		'MODULE_PATHNAME','enc_drop_old_key_info'
 	LANGUAGE C STRICT;
 
 	/* rename bakcup file, if it is exists */
@@ -191,7 +191,7 @@ SET check_function_bodies TO off;
 	RETURNS
 		bool
 	AS
-		'/usr/lib64/data_encryption.so','enc_rename_backupfile'
+		'MODULE_PATHNAME','enc_rename_backupfile'
 	LANGUAGE C STRICT;
 
 	CREATE OR REPLACE FUNCTION
@@ -199,7 +199,7 @@ SET check_function_bodies TO off;
 	RETURNS
 		void
 	AS 
-		'/usr/lib64/data_encryption.so','mask_activity'
+		'MODULE_PATHNAME','mask_activity'
 	LANGUAGE C STABLE STRICT;
 
 /* define index operator */
@@ -239,7 +239,7 @@ SET check_function_bodies TO off;
 	RETURNS
 		encrypt_text
 	AS
-		'/usr/lib64/data_encryption.so','boolenctext'
+		'MODULE_PATHNAME','boolenctext'
 	LANGUAGE C STRICT;
 
 	CREATE OR REPLACE FUNCTION
@@ -247,7 +247,7 @@ SET check_function_bodies TO off;
 	RETURNS
 		encrypt_text
 	AS
-		'/usr/lib64/data_encryption.so','enctextrtrim'
+		'MODULE_PATHNAME','enctextrtrim'
 	LANGUAGE C STABLE STRICT;
 
 	CREATE OR REPLACE FUNCTION
@@ -255,7 +255,7 @@ SET check_function_bodies TO off;
 	RETURNS
 		encrypt_text
 	AS
-		'/usr/lib64/data_encryption.so','inetenctext'
+		'MODULE_PATHNAME','inetenctext'
 	LANGUAGE C STABLE STRICT;
 
 	CREATE OR REPLACE FUNCTION
@@ -263,7 +263,7 @@ SET check_function_bodies TO off;
 	RETURNS
 		encrypt_text
 	AS
-		'/usr/lib64/data_encryption.so','xmlenctext'
+		'MODULE_PATHNAME','xmlenctext'
 	LANGUAGE C STABLE STRICT;
 
 	CREATE OR REPLACE FUNCTION
@@ -271,7 +271,7 @@ SET check_function_bodies TO off;
 	RETURNS
 		regclass
 	AS
-		'/usr/lib64/data_encryption.so','enctext_regclass'
+		'MODULE_PATHNAME','enctext_regclass'
 	LANGUAGE C STABLE STRICT;
 
 	/* encrypted test -> text */
