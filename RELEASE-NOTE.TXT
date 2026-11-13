@@ -1,3 +1,15 @@
+Release v1.2.2.0
+
+Summary of changes in thid version:
+
+- Added support for PostgreSQL 18.
+- Added PostgreSQL extension support.
+- Added RPM packaging support.
+
+Migration to Version V1.2.2.0
+
+- Migration from previous versions has not been verified.
+
 Release v1.2.1.0
 
 Summary of changes in this version:

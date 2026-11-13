@@ -14,7 +14,7 @@
 %endif
 
 Name: %{sname}_%{pgmajorversion}
-Version: 1.2.1.0
+Version: 1.2.2.0
 Release: 1%{?dist}
 Summary: Transparent Data Encryption for PostgreSQL Free Edition
 License: GPLv3
@@ -81,5 +81,5 @@ pg_prove -d postgres -r SOURCES/test
 %endif
 
 %changelog
-* Thu Nov 12 2026 Tomoaki Sato <tom-sato@sra.co.jp> - 1.2.1.0-1
+* Sat Nov 14 2026 Tomoaki Sato <tom-sato@sra.co.jp> - 1.2.2.0-1
 - Initial packaging.
