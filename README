@@ -1,6 +1,14 @@
 Transparent Data Encryption for PostgreSQL Free Edition
 =======================================================
 
+This repository is an unofficial fork of NEC's tdeforpg,
+available at the following URL:
+
+        https://github.com/nec-postgres/tdeforpg
+
+It has been updated for compatibility with newer PostgreSQL versions,
+installation as a PostgreSQL extension, and RPM packaging.
+
 This directory contains the source code of the Transparent Data Encryption for PostgreSQL.
 
 Transparent Data Encryption for PostgreSQL is Encryption tool for PostgreSQL. 

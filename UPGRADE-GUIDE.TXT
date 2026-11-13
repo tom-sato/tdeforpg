@@ -1,6 +1,10 @@
-Upgrade guides
-==============
-Upgrade insturctions for Transparent Data Encryption for PostgreSQL Free Edition
+Upgrade guide
+=============
+Upgrade instructions for Transparent Data Encryption for PostgreSQL Free Edition
+
+Note:
+This procedure applies to legacy versions of tdeforpg.
+Do not use it to upgrade to the PostgreSQL extension version.
 
 
 Overview
@@ -14,8 +18,8 @@ To upgrade from incompatible old version it is needed to migrate data using pg_d
 How to Upgrade from old version
 ===============================
 1. Setting environment variables
-    $ export PGHOME = #path of PostgreSQL installed
-    $ export TDEHOME = #path of tdeforpg downloaded
+    $ export PGHOME=#path of PostgreSQL installed
+    $ export TDEHOME=#path of tdeforpg downloaded
 
 2. Dump existing database using pg_dump
     $ PGOPTIONS="-c encrypt.enable=off" pg_dump -f <dump_file> -Fc <database>

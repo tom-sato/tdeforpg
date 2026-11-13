@@ -4,64 +4,52 @@ Installation instructions for Transparent Data Encryption for PostgreSQL Free Ed
 
 Requirements
 ============
-1. PostgreSQL Source Code
-   # It is not required, if you installed tdeforpg from RPM.
-2. PostgreSQL with psql installed
+1. PostgreSQL server
+2. pgcrypto
+3. PostgreSQL development headers and libraries
+   # These are not required if you installed tdeforpg from RPM.
 
 Installation and Configuration
 ==============================
-1. Setting environment variables
-    $ export PGSRC = #path of PostgreSQL source code
-    $ export PGHOME = #path of PostgreSQL installed
-    $ export TDEHOME = #path of tdeforpg downloaded
+1. Install pgTDE from RPM
+    $ sudo dnf install <rpm_file>.rpm
 
-2. Install pgcrypto from source code
-    # If you have already installed pgcrypto, you can skip this section.
-    $ cd $PGSRC/contrib/pgcrypto
-    $ gmake
-    $ gmake install
-    $ pg_ctl start
-    $ psql << EOF
-    > CREATE EXTENSION pgcrypto;
-    > EOF
-
-3. Building pgTDE
+2. Install pgTDE from source code
     # If you installed tdeforpg from RPM, please skip this section.
-    $ sudo ln -s $PGHOME/lib/pgcrypto.so /usr/lib64/libpgcrypto.so
-    $ cd $PGSRC
-    $ ./configure
-    $ cd $TDEHOME/SOURCES/data_encryption
-    $ sh makedencryption.sh <pgver> $PGSRC
-      # <pgver> is version of PostgreSQL without dot (93 or 94)
+    $ make PG_CONFIG=/usr/pgsql-<pgver>/bin/pg_config
+    $ sudo make PG_CONFIG=/usr/pgsql-<pgver>/bin/pg_config install
+    # <pgver> is the major version of PostgreSQL (e.g. 18)
 
-
-4. install pgTDE to PostgreSQL
-    $ sudo ln -s $TDEHOME/SOURCES/data_encryption/<pgver>/data_encryption<pgver>.so.<version> /usr/lib64/data_encryption.so
-    $ vim $PGDATA/postgresql.conf  # add shared_preload_libraries to postgresql.conf 
-    shared_preload_libraries='/usr/lib64/data_encryption.so'
+3. Configure PostgreSQL and install pgTDE extension
+    $ vim $PGDATA/postgresql.conf  # add data_encryption to shared_preload_libraries
+    shared_preload_libraries = 'data_encryption'
     $ pg_ctl restart
-    $ cd $TDEHOME/SOURCES
-    $ sh bin/cipher_setup.sh $PGHOME
-    Transparent data encryption feature setup script
-    Please select from the setup menu below
-    Transparent data encryption feature setup menu
-    1: activate  the transparent data encryption feature
-    2: inactivate the transparent data encryption feature
-    select menu [1 - 2] > 1
-    Please enter database server port to connect : <port_number>
-    Please enter database user name to connect : <user_name>
-    Please enter password for authentication : <password>
-    Please enter database name to connect : <db_name>
+    $ psql -d <db_name> -c "CREATE EXTENSION tdeforpg CASCADE"
+    NOTICE:  installing required extension "pgcrypto"
+    CREATE EXTENSION
 
-5. AES-NI support
-    pgcrypto from PostgreSQL 10 support AES-NI.
-    You can use Windows installer, Linux rpm or build your PostgreSQL
-    with --with-openssl option.
-    
-    In PostgreSQL 9.5 or 9.6, if you want to use AES-NI supported pgcrypto,
-    Please replace ${PGHOME}/lib/pgcrypto.so (pgcrypto.dll in Windows) 
-    with the AES-NI supported binary below,
-    
-    Linux: ${TDEHOME}/SOURCES/data_encryption/<pgver>/libpgcrypto<pgver>.so.<version>
-    Windows: ${TDEHOME}\lib\pgcrypto.dll
+Usage
+=====
+An encryption session must be started before encrypting or decrypting data.
+Otherwise, an error will occur.
 
+1. Register an encryption key
+    $ psql -d <db_name>
+    =# SELECT cipher_key_disable_log();
+    =# SELECT cipher_key_regist(NULL, '<encryption_key>', 'aes');
+
+2. Start an encryption session
+    =# SELECT pgtde_begin_session('<encryption_key>');
+    =# SELECT cipher_key_enable_log();
+
+3. Encrypt and decrypt data
+    =# CREATE TABLE test_tde (id integer, data encrypt_text);
+    =# INSERT INTO test_tde VALUES (1, 'Hello, world!');
+    =# SELECT * FROM test_tde;
+     id |     data
+    ----+---------------
+      1 | Hello, world!
+    (1 row)
+
+4. End the encryption session
+    =# SELECT pgtde_end_session();
