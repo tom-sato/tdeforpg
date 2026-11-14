@@ -58,7 +58,7 @@ PATH=%{pginstdir}/bin:$PATH %{__make} %{?_smp_mflags} %{with_llvm_arg} install D
 %check
 %if %runselftest
 %pgdg_check_init
-pgdg_check_start main "shared_preload_libraries = 'data_encryption'"
+LANG=C.UTF-8 pgdg_check_start main "shared_preload_libraries = 'data_encryption'"
 psql -X -v ON_ERROR_STOP=1 -d postgres \
 -c "CREATE EXTENSION tdeforpg CASCADE" \
 -c "SELECT cipher_key_disable_log()" \
